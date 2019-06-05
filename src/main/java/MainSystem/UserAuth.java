@@ -65,7 +65,7 @@ public class UserAuth {
         if (!role.equals("")) {
             String token = issueToken(login, role);
             System.out.println(token);
-            return Response.status(302).header(LOCATION, "http://localhost:8080/Parking_war_exploded/api/echo").header(AUTHORIZATION, token).header("Access-Control-Allow-Origin", "*").build();
+            return Response.status(302).header(LOCATION, "http://localhost:8080/Parking_war_exploded/api/echo?token=" + token).header(AUTHORIZATION, token).build();
 //            return Response.temporaryRedirect(java.net.URI.create((("http://localhost:8080/Parking_war_exploded/api/users/hello")))).header("Access-Control-Allow-Origin", "*").build();
         } else {
             return Response.status(UNAUTHORIZED).build();
@@ -105,7 +105,8 @@ public class UserAuth {
     private String issueToken(String login, String role) {
         Key key = generateKey();
         String jwtToken = key+"."+login+"."+role;
-//        String jwtToken = Jwts.builder()
+        System.out.println(jwtToken);
+//         jwtToken = Jwts.builder()
 //                .setSubject(login)
 //                .setIssuer(uriInfo.getAbsolutePath().toString())
 //                .setIssuedAt(new Date())
@@ -118,7 +119,7 @@ public class UserAuth {
 
 
     public Key generateKey() {
-        String keyString = "simplekey";
+        String keyString = "simplekeiuagoiaygsy";
         Key key = new SecretKeySpec(keyString.getBytes(), 0, keyString.getBytes().length, "DES");
         return key;
     }

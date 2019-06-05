@@ -1,29 +1,14 @@
 package MainSystem;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.io.Serializable;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import java.io.Serializable;
-
-/**
- * Created by xinyuan.zhang on 9/4/17.
- */
 
 
 @Named(value ="dashboard")
@@ -51,6 +36,30 @@ public class DashboardManager implements Serializable{
         }
         return lots;
 
+    }
+
+    public void changePassword(int id){
+        User user = getUserById(id);
+
+    }
+
+    public User getUserById(int id){
+        List<User> users;
+        try {
+            TypedQuery<User> q = em.createQuery("SELECT b FROM User b", User.class);
+            users = q.getResultList();
+            for(User u : users){
+                if(u.getId() == id){
+                    return u;
+                }
+            }
+            return null;
+
+
+        } catch (Exception e) {
+            System.err.println("Error when trying to retrieve data from database: " + e);
+            return null;
+        }
     }
 
 
